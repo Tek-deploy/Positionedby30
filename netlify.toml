@@ -6,6 +6,12 @@
   status = 200
 
 [[redirects]]
-  from = "/letter-to-parents"
+  from = "/lettertoparents"
   to = "/index.html"
   status = 200
+
+# Older spelling, kept so any shared links still work.
+[[redirects]]
+  from = "/letter-to-parents"
+  to = "/lettertoparents"
+  status = 301

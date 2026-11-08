@@ -129,18 +129,25 @@ if (parents) {
   window.addEventListener('hashchange', () => { if (location.hash === '#parents') openParents(); });
 }
 
-/* ---------- Clean links to home-page sections (/whyp30, /letter-to-parents) ----------
+/* ---------- Clean links to home-page sections (/whyp30, /lettertoparents) ----------
  * netlify.toml serves index.html at these paths; this scrolls to the matching section.
  * When previewing locally (no Netlify), the links fall back to index.html#section.
  */
-const SECTION_ROUTES = { '/whyp30': 'why', '/letter-to-parents': 'parents' };
+const SECTION_ROUTES = { '/whyp30': 'why', '/lettertoparents': 'parents', '/letter-to-parents': 'parents' };
 const isLocalPreview = location.protocol === 'file:' || ['localhost', '127.0.0.1', ''].includes(location.hostname);
 
 function goToSection(id, smooth) {
   const target = document.getElementById(id);
   if (!target) return;
-  if (target.tagName === 'DETAILS') target.open = true;
-  target.scrollIntoView({ behavior: smooth ? 'smooth' : 'instant', block: 'start' });
+  const scroll = () => target.scrollIntoView({ behavior: smooth ? 'smooth' : 'instant', block: 'start' });
+  if (target.tagName === 'DETAILS' && !target.open) {
+    // Opening the panel changes the page height; scroll once the browser has laid it out,
+    // otherwise its scroll anchoring cancels the scroll.
+    target.open = true;
+    requestAnimationFrame(() => requestAnimationFrame(scroll));
+  } else {
+    scroll();
+  }
 }
 
 const currentRoute = location.pathname.replace(/\/+$/, '');
