@@ -1,0 +1,11 @@
+# Clean links that open a section of the home page.
+# Netlify serves index.html at these addresses; js/main.js scrolls to the section.
+[[redirects]]
+  from = "/whyp30"
+  to = "/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/letter-to-parents"
+  to = "/index.html"
+  status = 200

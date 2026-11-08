@@ -24,7 +24,7 @@ const COMING_SOON = {
   prayers: {
     eyebrow: 'The P30 Global Alignment Prayers',
     title: 'Registration opens <em>soon.</em>',
-    copy: 'Registration for next month’s Alignment Prayer will open shortly.',
+    copy: 'Registration for the Global Alignment Prayers will open shortly.',
     copy2: '',
     subject: 'Global Alignment Prayers: notify me when registration opens'
   },
@@ -128,6 +128,48 @@ if (parents) {
   if (location.hash === '#parents') openParents();
   window.addEventListener('hashchange', () => { if (location.hash === '#parents') openParents(); });
 }
+
+/* ---------- Clean links to home-page sections (/whyp30, /letter-to-parents) ----------
+ * netlify.toml serves index.html at these paths; this scrolls to the matching section.
+ * When previewing locally (no Netlify), the links fall back to index.html#section.
+ */
+const SECTION_ROUTES = { '/whyp30': 'why', '/letter-to-parents': 'parents' };
+const isLocalPreview = location.protocol === 'file:' || ['localhost', '127.0.0.1', ''].includes(location.hostname);
+
+function goToSection(id, smooth) {
+  const target = document.getElementById(id);
+  if (!target) return;
+  if (target.tagName === 'DETAILS') target.open = true;
+  target.scrollIntoView({ behavior: smooth ? 'smooth' : 'instant', block: 'start' });
+}
+
+const currentRoute = location.pathname.replace(/\/+$/, '');
+if (SECTION_ROUTES[currentRoute]) {
+  if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+  window.addEventListener('load', () => goToSection(SECTION_ROUTES[currentRoute], false));
+}
+
+document.querySelectorAll('a[href^="/"]').forEach(link => {
+  const path = link.getAttribute('href');
+  const id = SECTION_ROUTES[path];
+  if (!id) return;
+  const onHomePage = Boolean(document.getElementById(id));
+  if (onHomePage) {
+    // Already on the home page: scroll there and show the clean address.
+    link.addEventListener('click', event => {
+      event.preventDefault();
+      if (!isLocalPreview) history.pushState(null, '', path);
+      goToSection(id, true);
+    });
+  } else if (isLocalPreview) {
+    link.setAttribute('href', 'index.html#' + id);
+  }
+});
+
+window.addEventListener('popstate', () => {
+  const id = SECTION_ROUTES[location.pathname.replace(/\/+$/, '')];
+  if (id) goToSection(id, false);
+});
 
 /* ---------- Career track tabs (coaching page) ---------- */
 const tabs = [...document.querySelectorAll('.track-tab')];
