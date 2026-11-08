@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "p30-website",
+      "runtimeExecutable": "python",
+      "runtimeArgs": ["-m", "http.server", "5530"],
+      "port": 5530
+    }
+  ]
+}
