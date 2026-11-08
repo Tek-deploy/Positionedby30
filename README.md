@@ -35,3 +35,9 @@ When a link is filled in, those buttons open the form in a new tab instead of th
 ## Search engines
 
 The pages have no `noindex` tag, so search engines can list the site.
+
+## Clean links
+
+`/whyp30` and `/lettertoparents` open the home page at the "Why" and "Parents" sections.
+`netlify.toml` serves `index.html` at those addresses and `js/main.js` scrolls to the section.
+They only work on Netlify. When you preview locally, the links fall back to `index.html#why` and `index.html#parents`.
