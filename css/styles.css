@@ -253,6 +253,6 @@
 .footer .image-disclosure{margin-top:14px}
 
 /* P30 logo image (replaces the text brand mark) */
-.brand-logo{display:block;height:44px;width:auto;flex:none}
-.soon-band .brand-logo{height:36px}
-@media(max-width:730px){.brand-logo{height:38px}.soon-band .brand-logo{height:32px}}
+.brand-logo{display:block;height:34px;width:auto;flex:none}
+.soon-band .brand-logo{height:30px}
+@media(max-width:730px){.brand-logo{height:30px}.soon-band .brand-logo{height:26px}}
