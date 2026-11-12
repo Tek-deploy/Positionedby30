@@ -256,3 +256,10 @@
 .brand-logo{display:block;height:34px;width:auto;flex:none}
 .soon-band .brand-logo{height:30px}
 @media(max-width:730px){.brand-logo{height:30px}.soon-band .brand-logo{height:26px}}
+
+/* Extra Register button under the prayers photo: phones only */
+.experience-v2 .photo-register{display:none}
+@media(max-width:730px){
+ .experience-v2 .photo-register{display:flex;width:100%;margin-top:18px;background:var(--ivory);border-color:var(--ivory);color:var(--teal);font-size:12px;min-height:56px}
+ .experience-v2 .photo-register:hover{background:#e2d5b9;border-color:#e2d5b9}
+}
